@@ -1,10 +1,5 @@
 # jeasyui.extensions.datagrid.hideShowColumn
-jQuery EasyUI datagrid extension
-
-
-
-
-**jQuery EasyUI datagrid隐藏显示列插件**
+**jQuery EasyUI datagrid隐藏显示列插件扩展**
 
 ## Resources
 
