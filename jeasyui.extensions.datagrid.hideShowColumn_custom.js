@@ -223,30 +223,29 @@ function getHideShowDgColumnFromLocalStorage($datagrid){
   if (((gridTitle!="" && gridTitle!=null)?(gridTitle.indexOf("style")!=-1?false:true):false)!=true){
 	return false;
   }else{
-	if(window.localStorage.length==0){
-		saveDefaultHideColumn();
+	var localStorageKeys = [];
+	for(var i=localStorage.length - 1; i >=0; i--){
+		localStorageKeys.push(localStorage.key(i));
 	}
-	for(var key in window.localStorage){
-	  if(key===storeHideShowDgField){
-		  //localStorage以字符串形式存储
-		  var hideShowColumnFields = JSON.parse(window.localStorage.getItem(key));
-		  var hideColumnFields = hideShowColumnFields.hideColumn;
-		  var showColumnFields = hideShowColumnFields.showColumn;
-		  if(hideColumnFields!="" && hideColumnFields!=undefined){
+	if(window.localStorage.length==0 || $.inArray(storeHideShowDgField,localStorageKeys)==-1){
+		saveDefaultHideColumn();
+	}else{
+		//localStorage以字符串形式存储
+		var hideShowColumnFields = JSON.parse(window.localStorage.getItem(storeHideShowDgField));
+		var hideColumnFields = hideShowColumnFields.hideColumn;
+		var showColumnFields = hideShowColumnFields.showColumn;
+		if(hideColumnFields!="" && hideColumnFields!=undefined){
 			$.each(hideColumnFields, function (i, columnField) {
               $datagrid.datagrid('hideColumn', columnField);
 			});
 		  }
-		  if(showColumnFields!="" && showColumnFields!=undefined){
+		if(showColumnFields!="" && showColumnFields!=undefined){
 			$.each(showColumnFields, function (i, columnField) {
               $datagrid.datagrid('showColumn', columnField);
 			});
-		  }
-		  break;
-	  }else{
-		  saveDefaultHideColumn();
-	  }
-    }
+		}
+	}
+	
   }
 }
 
